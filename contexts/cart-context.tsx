@@ -1,6 +1,6 @@
 import { Cart } from "@/api/cart";
 import { CartItem } from "@/types/types";
-import { PropsWithChildren, createContext } from "react";
+import { PropsWithChildren, createContext, useEffect } from "react";
 
 type CartContextType = {
   cart: Cart;

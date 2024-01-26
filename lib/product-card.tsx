@@ -1,6 +1,8 @@
 import { useCart } from "@/contexts/use-cart";
+import { ShoppingCart } from "@/icons/shopping-cart";
 import { Product } from "@/types/types";
 import Image from "next/image";
+import Link from "next/link";
 
 const ProductCard = ({ product }: { product: Product }) => {
   const cart = useCart();
@@ -25,9 +27,11 @@ const ProductCard = ({ product }: { product: Product }) => {
         className="w-full h-[235px] bg-contain bg-no-repeat bg-center"
         style={{ backgroundImage: `url('${product.image}')` }}
       />
-      <div className="flex flex-col px-[24px]" style={{ gap: 32 }}>
+      <div className="flex flex-col px-[24px] pt-3" style={{ gap: 32 }}>
         <div>
-          <h2 className="text-xl text-black font-bold">{shortenedTitle}</h2>
+          <Link href={`/product-detail/${product.id}`}>
+            <h2 className="text-xl text-black font-bold">{shortenedTitle}</h2>
+          </Link>
           <p>{product.category}</p>
         </div>
         <p className="font-medium text-base">{shortenedDescription}</p>
@@ -41,7 +45,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           onClick={onAddToCart}
           className="bg-black text-white py-5 rounded-xl"
         >
-          Add to Cart
+          Add to Cart <ShoppingCart />
         </button>
       </div>
     </div>

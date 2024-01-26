@@ -1,21 +1,35 @@
+"use client";
+import { getProduct } from "@/api/products";
 import { API_URL } from "@/constants";
 import { Product } from "@/types/types";
 import { NextPageContext } from "next";
 import Image from "next/image";
-import React from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 
-const getData = async (productId: number): Promise<Product> => {
-  const data = await fetch(`${API_URL}/products/${productId}`);
-  return data.json();
-};
+const ProductDetail = ({ params }: { params: { id: number } }) => {
+  const [product, setProduct] = useState<Product>();
 
-const ProductDetail = async ({ params }: { params: { id: number } }) => {
-  const product = await getData(params.id);
+  const fetchData = async () => {
+    const response = await getProduct(params.id);
+    setProduct(response);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  if (!product) {
+    return <>Loading...</>;
+  }
 
   return (
     <>
       <div className="w-[1354px] m-auto">
-        <button>Back</button>
+        <Link href="/home/">
+          <button>Back</button>
+        </Link>
         <div className="flex flex-row gap-[146px]">
           <div className="w-full p-[12px] bg-white rounded-md shadow-md">
             <Image
